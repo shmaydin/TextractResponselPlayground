@@ -1,7 +1,7 @@
 package data
 
-    object TextractResponseString {
-        val textractFirstTwoPages = """{
+object TextractResponseString {
+    val textractFirstTwoPages = """{
   "documentMetadata": { "pages": 2 },
   "jobStatus": "SUCCEEDED",
   "nextToken": "I+wbHPpaLBtajWyCwc8x5yAEQIdgKNLMeAFTuMg4JZ0rAAQyVkw92IeVN1yvqVpNRvkXXxIqCLNsYsKpkC6I4AM2wsXTIynRvZLT3AGMp6PtcdXRqiElnUvxa869ru0S4OAB5vQ=",
@@ -32548,4 +32548,4 @@ package data
   "detectDocumentTextModelVersion": "1.0"
 }
 """
-    }
+}
