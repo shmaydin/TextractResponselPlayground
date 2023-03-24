@@ -21,7 +21,7 @@ import software.amazon.awssdk.services.textract.model.Relationship
  * This class converts a GetDocumentTextDetectionResponse.toBuilder() Json Object into the GetDocumentTextDetectionResponse object to be used in local testing
  * The GetDocumentTextDetectionResponse object can be accessed by instantiating this class and using StringToTextractResponse().documentTextDetectionResponse
  */
-class StringToTextractResponse {
+class JsonStringToTextractResponse {
     private val textractResponseBuilderString = TextractResponseString.textractFirstTwoPages
     private val textractResponseBuilderJson = Json.parseToJsonElement(textractResponseBuilderString).jsonObject
     val documentTextDetectionResponse: GetDocumentTextDetectionResponse = buildGetDocumentTextDetectionResponse()
@@ -49,11 +49,9 @@ class StringToTextractResponse {
         return metadata.build()
     }
 
-    private fun buildBlockList(): MutableList<Block> {
-        val blocks = mutableListOf<Block>()
-
+    private fun buildBlockList(): List<Block> {
         val blocksJson = textractResponseBuilderJson["blocks"]!!.jsonArray
-        blocksJson.forEach {
+        val blocks = blocksJson.map {
             val blockJson = it.jsonObject
 
             // Skipped entityTypes, selectionStatus, query because they're always null for text detection
@@ -70,9 +68,8 @@ class StringToTextractResponse {
             block.id(blockJson["id"]!!.jsonPrimitive.content)
             block.relationships(buildBlockRelationships(blockJson["relationships"]!!))
             block.page(blockJson["page"]!!.jsonPrimitive.content.toIntOrNull())
-
-            println(block.build())
-        }
+            block.build()
+        }.toList()
 
         return blocks
     }
